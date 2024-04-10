@@ -1,0 +1,130 @@
+import tkinter as tk
+import tkinter.messagebox as messagebox
+
+def clear1():
+    result_entry.delete(0, "end")
+    entry.delete(0, "end")
+    entry2.delete(0, "end")
+    entry3.delete(0, "end")
+    entry4.delete(0, "end")
+    entry5.delete(0, "end")
+def convert():
+    global result
+    decimal_value = entry.get()
+    from_base = from_var.get()
+    to_base = to_var.get()
+
+    try:
+        decimal_value = int(decimal_value, from_base)
+
+        binary_value = bin(decimal_value)[2:]
+        octal_value = oct(decimal_value)[2:]
+        hexadecimal_value = hex(decimal_value)[2:]
+
+        if to_base == 2:
+            result = binary_value
+        elif to_base == 8:
+            result = octal_value
+        elif to_base == 16:
+            result = hexadecimal_value
+        elif to_base == 10:
+            result = str(decimal_value)
+
+        result_var.set("result is : " + result)
+        result_var1.set("DES is : " + str(int(entry.get(), from_base)))
+        result_var2.set("BIN : " + str(bin(int(entry.get()))[2:]))
+        result_var3.set("OCT is : " + str(oct(int(entry.get()))[2:]))
+        result_var4.set("HEX is : " + str(hex(int(entry.get()))[2:]))
+    except ValueError:
+        result_var.set("Invalid input")
+
+def exit11():
+    close = messagebox.askyesno('Alert', 'Are you sure that you want to exit?')
+    if close:
+        root.destroy()
+
+# عمل الواجهه بتاعت البرنامج
+root = tk.Tk()
+root.title("Number System Converter")
+root.geometry("600x700")
+root.configure(bg="#283747", cursor='pirate')
+root.resizable(width=False, height=False)
+# عمل الازرار
+entry = tk.Entry(root, width=25, bg="#f0f0f0", cursor='pirate', fg="#283747", font=("Arial", 30),bd=5)
+entry.pack(pady=20)
+
+from_var = tk.IntVar()
+to_var = tk.IntVar()
+
+from_frame = tk.Frame(root, bg="#283747")
+from_frame.pack()
+from_label = tk.Label(from_frame, text="From:", cursor='pirate', font=("Helvetica", 15), bg="#283747", fg="#2196F3")
+from_label.pack(side="left")
+from_radio_decimal = tk.Radiobutton(from_frame, text="Decimal", cursor='pirate', variable=from_var, value=10,
+                                    bg="#283747", fg="#2196F3", font=("Helvetica", 15))
+from_radio_decimal.pack(side="left", padx=10)
+from_radio_binary = tk.Radiobutton(from_frame, text="Binary", cursor='pirate', variable=from_var, value=2, bg="#283747",
+                                   fg="#2196F3", font=("Helvetica", 15))
+from_radio_binary.pack(side="left", padx=10)
+from_radio_octal = tk.Radiobutton(from_frame, text="Octal", cursor='pirate', variable=from_var, value=8, bg="#283747",
+                                  fg="#2196F3", font=("Helvetica", 15))
+from_radio_octal.pack(side="left", padx=10)
+from_radio_hexadecimal = tk.Radiobutton(from_frame, cursor='pirate', text="Hexadecimal", variable=from_var, value=16,
+                                        bg="#283747", fg="#2196F3", font=("Helvetica", 15))
+from_radio_hexadecimal.pack(side="left", padx=10)
+
+to_frame = tk.Frame(root, bg="#283747")
+to_frame.pack(padx=40)
+to_label = tk.Label(to_frame, text="To:", cursor='pirate', font=("Helvetica", 15), bg="#283747", fg="#2196F3")
+to_label.pack(side="left")
+to_radio_decimal = tk.Radiobutton(to_frame, text="Decimal", cursor='pirate', variable=to_var, value=10, bg="#283747",
+                                  fg="#2196F3", font=("Helvetica", 15))
+to_radio_decimal.pack(side="left", padx=10)
+to_radio_binary = tk.Radiobutton(to_frame, text="Binary", cursor='pirate', variable=to_var, value=2, bg="#283747",
+                                 fg="#2196F3", font=("Helvetica", 15))
+to_radio_binary.pack(side="left", padx=10)
+to_radio_octal = tk.Radiobutton(to_frame, text="Octal", variable=to_var, value=8, bg="#283747", fg="#2196F3",
+                                font=("Helvetica", 15))
+to_radio_octal.pack(side="left", padx=10)
+to_radio_hexadecimal = tk.Radiobutton(to_frame, text="Hexadecimal", cursor='pirate', variable=to_var, value=16,
+                                      bg="#283747", fg="#2196F3", font=("Helvetica", 15))
+to_radio_hexadecimal.pack(side="left", padx=10)
+
+result_var = tk.StringVar()
+result_var2 = tk.StringVar()
+result_var3 = tk.StringVar()
+result_var4 = tk.StringVar()
+result_entry = tk.Entry(root, width=25, textvariable=result_var, cursor='star', font=("Helvetica", 30), bg="#2196F3",
+                        fg="black")
+result_entry.pack(pady=30)
+
+exit_button = tk.Button(root, text='Exit', command=exit11, fg='black', bg='sky blue', relief="groove", width=39,
+                        font=('Arial', 18))
+
+exit_button.pack(side="bottom", pady=8)
+
+clear_button = tk.Button(root, text='clear', command=clear1, fg='black', bg='sky blue', relief="groove", width=39,
+                         font=('Arial', 18))
+
+clear_button.pack(side="bottom", pady=2)
+
+convert_button = tk.Button(root, text="Convert", command=convert, bg="#18c1c9", fg="#fff", font=('Arial', 18),
+                           relief="groove", width=39)
+convert_button.pack(side="bottom", pady=6)
+
+lbframe=tk.LabelFrame(root,text="All Systems")
+lbframe.pack(expand=True, fill="both" , padx=25, pady=5)
+
+result_var1 = tk.StringVar()
+entry2 = tk.Entry(lbframe, width=25, bg="#e74c3c", cursor='pirate', fg="#283747", textvariable=result_var1 ,font=("Arial", 30))
+entry2.pack(fill="x", padx=5, pady=5)
+
+entry3 = tk.Entry(lbframe, width=25, bg="#e74c3c", cursor='pirate',textvariable=result_var2, fg="#283747", font=("Arial", 30))
+entry3.pack(fill="x", padx=5, pady=5)
+
+entry4 = tk.Entry(lbframe, width=25, bg="#e74c3c", cursor='pirate', textvariable=result_var3, fg="#283747", font=("Arial", 30))
+entry4.pack(fill="x", padx=5, pady=5)
+
+entry5 = tk.Entry(lbframe, width=25, bg="#e74c3c", cursor='pirate', fg="#283747", textvariable=result_var4, font=("Arial", 30))
+entry5.pack(fill="x", padx=5, pady=5)
+root.mainloop()
